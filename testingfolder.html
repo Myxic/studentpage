@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+    <style>
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageFolder = '/images'; // Replace with the path to your image folder
+
+            const gallery = document.querySelector('.gallery');
+
+            // Function to fetch the images from the folder
+            function fetchImages() {
+                fetch(imageFolder)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const dom = parser.parseFromString(html, 'text/html');
+                        const images = dom.querySelectorAll('a');
+
+                        images.forEach(image => {
+                            const imageUrl = image.getAttribute('href');
+                            console.log(imageUrl);
+                            // Create an <img> element for each image
+                            const imgElement = document.createElement('img');
+                            const imgDiv = document.createElement('div');
+                            const imgDiv2 = document.createElement('div');
+                            imgDiv.classList.add('image');
+
+                            imgElement.setAttribute('src', '.' + imageUrl);
+                            // imgElement.setAttribute('src', imageFolder + (imageFolder.endsWith('/') ? '' : '/') + imageUrl);
+                            imgDiv.appendChild(imgElement);
+                            imgDiv2.appendChild(imgElement)
+                            gallery.appendChild(imgDiv).append(imgElement);
+
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching images:', error);
+                    });
+            }
+
+            fetchImages();
+        });
+    </script>
+</body>
+</html>

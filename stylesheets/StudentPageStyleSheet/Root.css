@@ -27,7 +27,7 @@
 .darkmode{
         --pc--:var(--fc--);
         --bc--: #121212;
-        --fc--: white;
+        --fc--: #bdbdbd;
         --ic--: #ef670b;
         --nav--hover:rgb(126, 109, 109);
         --icon--hover:#ef670b;
